@@ -1,20 +1,22 @@
+import { observer } from "mobx-react-lite";
 import React, { FC } from "react";
 
 interface BookItemProps {
   redirectToBook: any;
+  bookItem: any;
 }
 
-const BookItem: FC<BookItemProps> = ({ redirectToBook }) => {
+const BookItem: FC<BookItemProps> = ({ redirectToBook, bookItem }) => {
   return (
     <div
       className="bg-grey-500 w-[290px] h-[450px] cursor-pointer"
       onClick={() => redirectToBook("book/1")}
     >
-      <img src="" alt="book" />
+      <img src={bookItem.volumeInfo.imageLinks.thumbnail} alt="book" />
 
-      <div>Computers</div>
-      <div>Node js разработка</div>
-      <div>Дэвид Фишер</div>
+      <div>{bookItem.volumeInfo.categories[0]}</div>
+      <div>{bookItem.volumeInfo.title}</div>
+      <div>{bookItem.volumeInfo.authors}</div>
     </div>
   );
 };

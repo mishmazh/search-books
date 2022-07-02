@@ -1,8 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import BookItem from "./BookItem";
 import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
-const BookList = () => {
+interface BookListProps {
+  bookList: any;
+}
+
+const BookList: FC<BookListProps> = ({ bookList }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,8 +15,8 @@ const BookList = () => {
       <h3 className="font-bold text-xl">Found 446 results</h3>
 
       <div className="flex flex-wrap justify-center gap-[50px] mt-10">
-        {[1, 2, 3, 4].map((book, index) => (
-          <BookItem redirectToBook={navigate} key={index} />
+        {bookList.map((bookItem: any, index: number) => (
+          <BookItem bookItem={bookItem} redirectToBook={navigate} key={index} />
         ))}
       </div>
     </div>
