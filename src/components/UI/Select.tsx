@@ -2,7 +2,8 @@ import React, { FC } from "react";
 
 interface SelectProps {
   label?: string;
-  options: string[];
+  options: any;
+  onChange?: (e: any) => any;
 }
 
 const Select: FC<SelectProps> = ({ label, options, ...props }) => {
@@ -15,10 +16,10 @@ const Select: FC<SelectProps> = ({ label, options, ...props }) => {
       </label>
 
       <select className="h-11 w-48 text-black-500/75 " id={htmlFor} {...props}>
-        {options.map((option, index) => {
+        {options.map((option: any, index: number) => {
           return (
-            <option value={option} key={option + index}>
-              {option}
+            <option value={option.value} key={option.value + index}>
+              {option.text}
             </option>
           );
         })}

@@ -7,19 +7,12 @@ import books from "../store/books";
 import { observer } from "mobx-react-lite";
 
 const SearchBooks: FC = () => {
-  useEffect(() => {
-    books.fetchBooks();
-  }, []);
-
   return (
     <div>
       <Header />
 
       <Routes>
-        <Route
-          path="/"
-          element={<BookList bookList={books.state.bookList} />}
-        />
+        <Route path="/" element={<BookList state={books.state} />} />
         <Route path="book/:id" element={<BookInfo />} />
       </Routes>
     </div>

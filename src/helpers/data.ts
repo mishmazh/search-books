@@ -1,12 +1,15 @@
 export const options = {
   categories: [
-    "all",
-    "art",
-    "biography",
-    "computers",
-    "history",
-    "medical",
-    "poetry",
+    { text: "all", value: "all" },
+    { text: "art", value: "art" },
+    { text: "biography", value: "biography" },
+    { text: "computers", value: "computers" },
+    { text: "history", value: "history" },
+    { text: "medical", value: "medical" },
+    { text: "poetry", value: "poetry" },
   ],
-  sortingBy: ["relevance ", "newest"],
+  sortingBy: [
+    { text: "relevance", value: "relevance" },
+    { text: "newest", value: "newest" },
+  ],
 };
