@@ -10,12 +10,16 @@ const Select: FC<SelectProps> = ({ label, options, ...props }) => {
   const htmlFor = `${label}-${Math.random()}`;
 
   return (
-    <div className="text-xl">
+    <div className="text-sm">
       <label className="mr-2" htmlFor={htmlFor}>
         {label}
       </label>
 
-      <select className="h-11 w-48 text-black-500/75 " id={htmlFor} {...props}>
+      <select
+        className="h-8 w-48 text-black-500/75 border rounded"
+        id={htmlFor}
+        {...props}
+      >
         {options.map((option: any, index: number) => {
           return (
             <option value={option.value} key={option.value + index}>

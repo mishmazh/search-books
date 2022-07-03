@@ -1,75 +1,83 @@
-import axios from "axios";
 import { makeAutoObservable, runInAction } from "mobx";
+import { IBookItem, IBooks, IBooksResponse } from "../types";
+import { booksApi } from "../api/api";
 
 class Books {
-  state: any = {
+  state: IBooks = {
     bookList: [],
-    book: {},
-    totalBooks: 0,
-    page: 0,
-    search: "",
-    categories: "",
-    sorting: "",
-    isButton: false,
+    bookItem: {} as IBookItem,
+    totalBooksCount: 0,
+    pageIndex: 0,
+    maxResults: 30,
+    searchValue: "",
+    categoriesValue: "",
+    sortingValue: "",
+    isLoading: false,
+    error: "",
   };
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  async fetchBooks(
-    searchValue: string,
-    categoriesValue: string,
-    sortingValue: string
-  ) {
-    this.state.page = 0;
+  async fetchBooks(search: string, categories: string, sorting: string) {
+    this.state.pageIndex = 0;
 
-    const data = await axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchValue}+subject:${categoriesValue}&orderBy=${sortingValue}&maxResults=30`
-      )
-      .then((res) => res.data);
-
-    console.log(data);
+    const data: IBooksResponse = await booksApi
+      .fetchBooks(search, categories, sorting, this.state.maxResults)
+      .then((res) => res.data)
+      .catch((err) => console.log(err.message));
 
     runInAction(() => {
-      this.state.bookList = data.items;
-      this.state.totalBooks = data.totalItems;
+      if (data.totalItems !== 0) {
+        this.state.bookList = data.items;
+        this.state.totalBooksCount = data.totalItems;
 
-      this.state.search = searchValue;
-      this.state.categories = categoriesValue;
-      this.state.sorting = sortingValue;
-
-      this.state.isButton = true;
+        this.state.searchValue = search;
+        this.state.categoriesValue = categories;
+        this.state.sortingValue = sorting;
+      }
     });
+
+    console.log(data);
   }
 
   async loadMoreBooks() {
-    this.state.page += 30;
+    this.state.pageIndex += 30;
 
-    const data = await axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${this.state.search}+subject:${this.state.categories}&orderBy=${this.state.sorting}&maxResults=30&startIndex=${this.state.page}`
+    const data: IBooksResponse = await booksApi
+      .loadMoreBooks(
+        this.state.searchValue,
+        this.state.categoriesValue,
+        this.state.sortingValue,
+        this.state.maxResults,
+        this.state.pageIndex
       )
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((err) => console.log(err.message));
 
     runInAction(() => {
       this.state.bookList = [...this.state.bookList, ...data.items];
-      this.state.totalBooks = data.totalItems;
+      this.state.totalBooksCount = data.totalItems;
     });
-
-    if (this.state.totalBooks < this.state.page + 30)
-      this.state.isButton = false;
   }
 
-  async fetchSpecificBook(bookId: string) {
-    this.state.book = {};
+  async openSpecificBook(bookId: string) {
+    const data = await booksApi
+      .openSpecificBook(bookId)
+      .then((res) => res.data)
+      .catch((err) => console.log(err.message));
 
-    const data = await axios
-      .get(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
-      .then((res) => res.data);
+    runInAction(() => {
+      this.state.bookItem = data;
+    });
+  }
 
-    this.state.book = data;
+  clearBooks() {
+    runInAction(() => {
+      this.state.bookList = [];
+      this.state.totalBooksCount = 0;
+    });
   }
 }
 

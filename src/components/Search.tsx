@@ -5,32 +5,36 @@ import Select from "./UI/Select";
 import { options } from "../helpers/data";
 
 const Search: FC = () => {
-  const [value, setValue] = useState<string>("");
-  const [sorting, setSorting] = useState<string>(options.sortingBy[0].text);
+  const [search, setSearch] = useState<string>("");
   const [categories, setCategories] = useState<string>(
-    options.categories[0].text
+    options.categories[0].value
   );
+  const [sorting, setSorting] = useState<string>(options.sortingBy[0].value);
 
   const onSubmit = (e: KeyboardEvent) => {
     if (e.key !== "Enter") {
       return;
     }
 
-    books.fetchBooks(value, categories, sorting);
+    books.clearBooks();
+
+    if (search !== "") {
+      books.fetchBooks(search, categories, sorting);
+    }
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Input
-        className="w-full h-11 text-black-500 p-3"
+        className="w-full h-11 text-black-500 p-3 mb-4 rounded"
         type="text"
         placeholder="Search..."
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         onKeyDown={onSubmit}
       />
 
-      <div className="flex justify-between w-full">
+      <div className="flex justify-center gap-3">
         <Select
           label="Categories"
           onChange={(e) => setCategories(e.target.value)}

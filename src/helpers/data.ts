@@ -1,12 +1,12 @@
 export const options = {
   categories: [
-    { text: "all", value: "all" },
-    { text: "art", value: "art" },
-    { text: "biography", value: "biography" },
-    { text: "computers", value: "computers" },
-    { text: "history", value: "history" },
-    { text: "medical", value: "medical" },
-    { text: "poetry", value: "poetry" },
+    { text: "all", value: "" },
+    { text: "art", value: "+subject:art" },
+    { text: "biography", value: "+subject:biography" },
+    { text: "computers", value: "+subject:computers" },
+    { text: "history", value: "+subject:history" },
+    { text: "medical", value: "+subject:medical" },
+    { text: "poetry", value: "+subject:poetry" },
   ],
   sortingBy: [
     { text: "relevance", value: "relevance" },
