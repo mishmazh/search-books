@@ -1,39 +1,65 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import books from "../store/books";
 import { observer } from "mobx-react-lite";
 import not_found_image from "../assets/not-found.jpg";
+import Button from "./UI/Button";
+import Preloader from "./UI/Preloader";
 
 const BookInfo = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const {
+    bookItem: { volumeInfo },
+    isLoading,
+  } = books.state;
 
   useEffect(() => {
     id && books.openSpecificBook(id);
   }, []);
 
-  const {
-    bookItem: { volumeInfo },
-  } = books.state;
-
   return (
-    <div className="flex ">
-      <div className="bg-grey-500 w-full">
-        <img
-          src={
-            volumeInfo && volumeInfo.imageLinks
-              ? volumeInfo.imageLinks.thumbnail
-              : not_found_image
-          }
-          alt="bookItem"
-        />
-      </div>
+    <div className="md:flex md:flex-row flex flex-col-reverse">
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <>
+          <div className="md:w-2/5">
+            <div className="md:p-10 p-5 bg-grey-500">
+              <img
+                className="book-shadow"
+                src={
+                  volumeInfo && volumeInfo.imageLinks
+                    ? volumeInfo.imageLinks.extraLarge
+                    : not_found_image
+                }
+                alt="bookItem"
+              />
+            </div>
+          </div>
 
-      <div className="w-full">
-        <div>{volumeInfo && volumeInfo.categories}</div>
-        <div>{volumeInfo && volumeInfo.title}</div>
-        <div>{volumeInfo && volumeInfo.authors}</div>
-        <div>{volumeInfo && volumeInfo.description}</div>
-      </div>
+          <div className="md:w-3/5 md:p-9 p-5">
+            <Button className="btn-primary mb-6" onClick={() => navigate("/")}>
+              Back
+            </Button>
+
+            <div className="text-sm text-black-500/80 mb-7">
+              {volumeInfo && volumeInfo.categories}
+            </div>
+            <div className="text-2xl font-bold mb-3">
+              {volumeInfo && volumeInfo.title}
+            </div>
+            <div className="text-sm text-black-500/75 mb-6 underline">
+              {volumeInfo && volumeInfo.authors}
+            </div>
+            {volumeInfo && (
+              <div className="border border-grey-500 p-3 text-sm">
+                {volumeInfo.description}
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

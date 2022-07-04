@@ -1,8 +1,11 @@
-import React, { KeyboardEvent, FC, useState } from "react";
+import { KeyboardEvent, FC, useState } from "react";
 import books from "../store/books";
 import Input from "./UI/Input";
 import Select from "./UI/Select";
 import { options } from "../helpers/data";
+import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import Button from "./UI/Button";
 
 const Search: FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -10,31 +13,49 @@ const Search: FC = () => {
     options.categories[0].value
   );
   const [sorting, setSorting] = useState<string>(options.sortingBy[0].value);
+  const navigate = useNavigate();
 
-  const onSubmit = (e: KeyboardEvent) => {
+  const onSearchEnter = (e: KeyboardEvent) => {
     if (e.key !== "Enter") {
       return;
     }
 
-    books.clearBooks();
-
-    if (search !== "") {
-      books.fetchBooks(search, categories, sorting);
+    if (books.state.bookId) {
+      navigate("/");
     }
+
+    books.clearBooks();
+    search !== "" && books.fetchBooks(search, categories, sorting);
+  };
+
+  const onSearchClick = () => {
+    if (books.state.bookId) {
+      navigate("/");
+    }
+
+    books.clearBooks();
+    search !== "" && books.fetchBooks(search, categories, sorting);
   };
 
   return (
     <div className="w-full">
-      <Input
-        className="w-full h-11 text-black-500 p-3 mb-4 rounded"
-        type="text"
-        placeholder="Search..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        onKeyDown={onSubmit}
-      />
+      <div className="flex mb-3 relative">
+        <Input
+          className="w-full h-11 text-black-500 p-3 rounded"
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={onSearchEnter}
+          autoFocus
+        />
+        <Button
+          className="bg-search-icon bg-[length:38px] w-[38px] bg-no-repeat absolute top-0 right-0 bottom-0"
+          onClick={onSearchClick}
+        ></Button>
+      </div>
 
-      <div className="flex justify-center gap-3">
+      <div className="flex flex-wrap justify-center gap-3">
         <Select
           label="Categories"
           onChange={(e) => setCategories(e.target.value)}
@@ -50,4 +71,4 @@ const Search: FC = () => {
   );
 };
 
-export default Search;
+export default observer(Search);

@@ -13,16 +13,16 @@ const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
     volumeInfo: { imageLinks, categories, title, authors },
   } = bookItem;
 
-  console.log(authors);
+  // console.log(authors);
 
   return (
     <div
-      className="bg-grey-500 w-[290px] cursor-pointer"
+      className="bg-grey-500 w-[290px] cursor-pointer rounded"
       onClick={() => redirectHandler(id)}
     >
       <div className="grid place-items-center h-[275px]">
         <img
-          className="shadow-[5px_5px_10px_0_rgba(0,0,0,0.4)] w-[135px]"
+          className="book-shadow w-[135px]"
           src={imageLinks ? imageLinks.thumbnail : not_found_image}
           alt="bookItem"
         />
@@ -32,8 +32,8 @@ const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
         <div className="text-black-500/50 text-sm underline">
           {categories && categories[0]}
         </div>
-        <div className="text-xl font-bold">{title}</div>
-        <div className="text-black-500/50">{authors}</div>
+        <div className="font-bold">{title}</div>
+        <div className="text-sm text-black-500/50">{authors}</div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ class Books {
     totalBooksCount: 0,
     pageIndex: 0,
     maxResults: 30,
+    bookId: "",
     searchValue: "",
     categoriesValue: "",
     sortingValue: "",
@@ -21,6 +22,7 @@ class Books {
   }
 
   async fetchBooks(search: string, categories: string, sorting: string) {
+    this.state.isLoading = true;
     this.state.pageIndex = 0;
 
     const data: IBooksResponse = await booksApi
@@ -37,12 +39,13 @@ class Books {
         this.state.categoriesValue = categories;
         this.state.sortingValue = sorting;
       }
-    });
 
-    console.log(data);
+      this.state.isLoading = false;
+    });
   }
 
   async loadMoreBooks() {
+    this.state.isLoading = true;
     this.state.pageIndex += 30;
 
     const data: IBooksResponse = await booksApi
@@ -59,10 +62,16 @@ class Books {
     runInAction(() => {
       this.state.bookList = [...this.state.bookList, ...data.items];
       this.state.totalBooksCount = data.totalItems;
+
+      this.state.isLoading = false;
     });
   }
 
   async openSpecificBook(bookId: string) {
+    runInAction(() => {
+      this.state.isLoading = true;
+    });
+
     const data = await booksApi
       .openSpecificBook(bookId)
       .then((res) => res.data)
@@ -70,6 +79,9 @@ class Books {
 
     runInAction(() => {
       this.state.bookItem = data;
+      this.state.bookId = bookId;
+
+      this.state.isLoading = false;
     });
   }
 

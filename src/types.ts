@@ -6,6 +6,7 @@ export interface IBookItem {
     description: string;
     imageLinks: {
       thumbnail: string;
+      extraLarge: string;
     };
     title: string;
   };
@@ -17,6 +18,7 @@ export interface IBooks {
   totalBooksCount: number;
   pageIndex: number;
   maxResults: number;
+  bookId: string;
   searchValue: string;
   categoriesValue: string;
   sortingValue: string;

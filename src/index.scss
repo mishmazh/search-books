@@ -26,3 +26,11 @@
   font-family: MontserratMedium;
   src: url("fonts/Montserrat-Medium.ttf");
 }
+
+.book-shadow {
+  @apply shadow-[5px_5px_10px_0_rgba(0,0,0,0.4)];
+}
+
+.btn-primary {
+  @apply bg-black-500/75 text-white-500 text-sm px-4 py-2 rounded hover:bg-black-500 duration-200;
+}
