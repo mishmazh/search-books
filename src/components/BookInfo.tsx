@@ -26,12 +26,12 @@ const BookInfo = () => {
   return (
     <div className="md:flex md:flex-row flex flex-col-reverse">
       <div className="md:w-2/5">
-        <div className="md:p-10 p-5 bg-grey-500">
+        <div className="md:p-10 p-5 bg-grey-500 flex justify-center">
           <img
-            className="book-shadow"
+            className="book-shadow w-1/2"
             src={
               volumeInfo && volumeInfo.imageLinks
-                ? volumeInfo.imageLinks.extraLarge
+                ? volumeInfo.imageLinks.thumbnail
                 : not_found_image
             }
             alt="bookItem"

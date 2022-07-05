@@ -1,5 +1,5 @@
 # Search Books
-
+![gif about app](src/assets/show-app.gif)
 ## Functional:
 1. Search field (works only with Enter key) and search button for searching books
 2. Filter by category (all, art, biography, computers, history, medical, poetry)
@@ -20,3 +20,4 @@
 ### Documentation:
 https://developers.google.com/books/docs/v1/using 
 
+![bottom img](src/assets/header-image.png)
