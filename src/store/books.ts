@@ -1,5 +1,5 @@
-import { action, makeAutoObservable, runInAction } from "mobx";
-import { IBookItem, IBooks, IBooksResponse } from "../types";
+import { makeAutoObservable, runInAction } from "mobx";
+import { IBookItem, IBooks, IBooksResponse } from "./types";
 import { booksApi } from "../api/api";
 
 class Books {
@@ -14,7 +14,7 @@ class Books {
     categoriesValue: "",
     sortingValue: "",
     isLoading: false,
-    error: "",
+    errorMsg: "",
   };
 
   constructor() {
@@ -34,9 +34,9 @@ class Books {
       .catch((err) => {
         runInAction(() => {
           if (err.response.status === 400) {
-            this.state.error = "The field should not be empty.";
+            this.state.errorMsg = "The field should not be empty.";
           } else {
-            this.state.error = err.message;
+            this.state.errorMsg = err.message;
           }
           this.state.isLoading = false;
         });
@@ -51,7 +51,7 @@ class Books {
         this.state.categoriesValue = categories;
         this.state.sortingValue = sorting;
       } else {
-        this.state.error = "Nothing found";
+        this.state.errorMsg = "Nothing found";
       }
 
       this.state.isLoading = false;
@@ -75,7 +75,7 @@ class Books {
       .then((res) => res.data)
       .catch((err) => {
         runInAction(() => {
-          this.state.error = err.message;
+          this.state.errorMsg = err.message;
           this.state.isLoading = false;
         });
       });
@@ -93,12 +93,12 @@ class Books {
       this.state.isLoading = true;
     });
 
-    const data = await booksApi
+    const data: IBookItem = await booksApi
       .openSpecificBook(bookId)
       .then((res) => res.data)
       .catch((err) => {
         runInAction(() => {
-          this.state.error = err.message;
+          this.state.errorMsg = err.message;
           this.state.isLoading = false;
         });
       });
@@ -116,7 +116,7 @@ class Books {
       this.state.bookList = [];
       this.state.totalBooksCount = 0;
       this.state.pageIndex = 0;
-      this.state.error = "";
+      this.state.errorMsg = "";
     });
   }
 }

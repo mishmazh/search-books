@@ -13,6 +13,7 @@ const Search: FC = () => {
     options.categories[0].value
   );
   const [sorting, setSorting] = useState<string>(options.sortingBy[0].value);
+  const { bookId } = books.state;
   const navigate = useNavigate();
 
   const onSearchEnter = (e: KeyboardEvent) => {
@@ -20,7 +21,7 @@ const Search: FC = () => {
       return;
     }
 
-    if (books.state.bookId) {
+    if (bookId) {
       navigate("/");
     }
 
@@ -29,7 +30,7 @@ const Search: FC = () => {
   };
 
   const onSearchClick = () => {
-    if (books.state.bookId) {
+    if (bookId) {
       navigate("/");
     }
 
@@ -41,6 +42,7 @@ const Search: FC = () => {
     <div className="w-full">
       <div className="flex mb-3 relative">
         <Input
+          data-testid="search-input"
           className="w-full h-11 text-black-500 p-3 rounded"
           type="text"
           placeholder="Search..."

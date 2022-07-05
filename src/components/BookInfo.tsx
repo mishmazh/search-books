@@ -16,6 +16,7 @@ const BookInfo = () => {
 
   useEffect(() => {
     id && books.openSpecificBook(id);
+    // eslint-disable-next-line
   }, []);
 
   if (isLoading) {
@@ -29,7 +30,7 @@ const BookInfo = () => {
           <img
             className="book-shadow"
             src={
-              volumeInfo?.imageLinks
+              volumeInfo && volumeInfo.imageLinks
                 ? volumeInfo.imageLinks.extraLarge
                 : not_found_image
             }

@@ -1,13 +1,13 @@
-import React, { FC } from "react";
+import { ChangeEvent, FC, KeyboardEvent } from "react";
 
 interface InputProps {
   className?: string;
   placeholder?: string;
   type?: string;
   value: string;
-  onChange: (e: any) => any;
-  onKeyDown: any;
-  autoFocus: any;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
 }
 
 const Input: FC<InputProps> = ({ className, type = "text", ...props }) => {

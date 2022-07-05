@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IBookItem } from "../types";
+import { IBookItem } from "../store/types";
 import not_found_image from "../assets/not-found.jpg";
 
 interface BookItemProps {
@@ -8,12 +8,7 @@ interface BookItemProps {
 }
 
 const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
-  const {
-    id,
-    volumeInfo: { imageLinks, categories, title, authors },
-  } = bookItem;
-
-  // console.log(authors);
+  const { id, volumeInfo } = bookItem;
 
   return (
     <div
@@ -23,17 +18,21 @@ const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
       <div className="grid place-items-center h-[275px]">
         <img
           className="book-shadow w-[135px]"
-          src={imageLinks ? imageLinks.thumbnail : not_found_image}
+          src={
+            volumeInfo.imageLinks
+              ? volumeInfo.imageLinks.thumbnail
+              : not_found_image
+          }
           alt="bookItem"
         />
       </div>
 
       <div className="flex flex-col gap-2 px-6 pb-5">
         <div className="text-black-500/50 text-sm underline">
-          {categories && categories[0]}
+          {volumeInfo.categories && volumeInfo.categories[0]}
         </div>
-        <div className="font-bold">{title}</div>
-        <div className="text-sm text-black-500/50">{authors}</div>
+        <div className="font-bold">{volumeInfo.title}</div>
+        <div className="text-sm text-black-500/50">{volumeInfo?.authors}</div>
       </div>
     </div>
   );

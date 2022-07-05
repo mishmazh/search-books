@@ -23,7 +23,7 @@ export interface IBooks {
   categoriesValue: string;
   sortingValue: string;
   isLoading: boolean;
-  error: string;
+  errorMsg: string;
 }
 
 export interface IBooksResponse {

@@ -1,8 +1,13 @@
 import { ChangeEvent, FC } from "react";
 
+interface IOption {
+  text: string;
+  value: string;
+}
+
 interface SelectProps {
   label?: string;
-  options: any;
+  options: IOption[];
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -20,7 +25,7 @@ const Select: FC<SelectProps> = ({ label, options, ...props }) => {
         id={htmlFor}
         {...props}
       >
-        {options.map((option: any, index: number) => {
+        {options.map((option, index: number) => {
           return (
             <option value={option.value} key={option.value + index}>
               {option.text}
