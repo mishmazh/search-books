@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, makeAutoObservable, runInAction } from "mobx";
 import { IBookItem, IBooks, IBooksResponse } from "../types";
 import { booksApi } from "../api/api";
 
@@ -22,13 +22,25 @@ class Books {
   }
 
   async fetchBooks(search: string, categories: string, sorting: string) {
-    this.state.isLoading = true;
-    this.state.pageIndex = 0;
+    this.clearBooks();
+
+    runInAction(() => {
+      this.state.isLoading = true;
+    });
 
     const data: IBooksResponse = await booksApi
       .fetchBooks(search, categories, sorting, this.state.maxResults)
       .then((res) => res.data)
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        runInAction(() => {
+          if (err.response.status === 400) {
+            this.state.error = "The field should not be empty.";
+          } else {
+            this.state.error = err.message;
+          }
+          this.state.isLoading = false;
+        });
+      });
 
     runInAction(() => {
       if (data.totalItems !== 0) {
@@ -38,6 +50,8 @@ class Books {
         this.state.searchValue = search;
         this.state.categoriesValue = categories;
         this.state.sortingValue = sorting;
+      } else {
+        this.state.error = "Nothing found";
       }
 
       this.state.isLoading = false;
@@ -45,8 +59,10 @@ class Books {
   }
 
   async loadMoreBooks() {
-    this.state.isLoading = true;
-    this.state.pageIndex += 30;
+    runInAction(() => {
+      this.state.isLoading = true;
+      this.state.pageIndex += 30;
+    });
 
     const data: IBooksResponse = await booksApi
       .loadMoreBooks(
@@ -57,7 +73,12 @@ class Books {
         this.state.pageIndex
       )
       .then((res) => res.data)
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        runInAction(() => {
+          this.state.error = err.message;
+          this.state.isLoading = false;
+        });
+      });
 
     runInAction(() => {
       this.state.bookList = [...this.state.bookList, ...data.items];
@@ -75,7 +96,12 @@ class Books {
     const data = await booksApi
       .openSpecificBook(bookId)
       .then((res) => res.data)
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        runInAction(() => {
+          this.state.error = err.message;
+          this.state.isLoading = false;
+        });
+      });
 
     runInAction(() => {
       this.state.bookItem = data;
@@ -89,6 +115,8 @@ class Books {
     runInAction(() => {
       this.state.bookList = [];
       this.state.totalBooksCount = 0;
+      this.state.pageIndex = 0;
+      this.state.error = "";
     });
   }
 }

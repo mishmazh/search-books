@@ -12,6 +12,10 @@
     @apply outline-none;
   }
 
+  button:disabled {
+    @apply bg-black-500/25;
+  }
+
   body {
     @apply font-[MontserratMedium];
   }
@@ -32,5 +36,5 @@
 }
 
 .btn-primary {
-  @apply bg-black-500/75 text-white-500 text-sm px-4 py-2 rounded hover:bg-black-500 duration-200;
+  @apply bg-black-500/75 text-white-500 text-sm px-4 py-2 rounded enabled:hover:bg-black-500 duration-200;
 }

@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import { ChangeEvent, FC } from "react";
 
 interface SelectProps {
   label?: string;
   options: any;
-  onChange?: (e: any) => any;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Select: FC<SelectProps> = ({ label, options, ...props }) => {
