@@ -43,6 +43,7 @@ const BookList: FC = () => {
       {totalBooksCount > pageIndex + maxResults && (
         <>
           <Button
+            data-testid="load-more-btn"
             className="btn-primary mt-10 "
             onClick={loadMoreBooksHandler}
             disabled={isLoading}

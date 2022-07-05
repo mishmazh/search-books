@@ -52,6 +52,7 @@ const Search: FC = () => {
           autoFocus
         />
         <Button
+          data-testid="search-btn"
           className="bg-search-icon bg-[length:24px_24px] w-[38px] bg-no-repeat bg-center absolute top-0 right-0 bottom-0"
           onClick={onSearchClick}
         />

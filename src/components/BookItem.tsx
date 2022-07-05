@@ -12,6 +12,7 @@ const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
 
   return (
     <div
+      data-testid="book-item"
       className="bg-grey-500 w-[290px] cursor-pointer rounded"
       onClick={() => redirectHandler(id)}
     >
