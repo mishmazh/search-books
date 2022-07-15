@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/search-books/static/css/main.d98162bc.css",
+    "main.js": "/search-books/static/js/main.4db1780d.js",
+    "static/media/header-image.png": "/search-books/static/media/header-image.06ea4666cf191f4f6511.png",
+    "static/media/Montserrat-Medium.ttf": "/search-books/static/media/Montserrat-Medium.3a0917345468c959207a.ttf",
+    "static/media/Montserrat-Light.ttf": "/search-books/static/media/Montserrat-Light.f0963fd9968fbd54cc35.ttf",
+    "static/media/preloader.gif": "/search-books/static/media/preloader.585e1c5124df26519cb6.gif",
+    "static/media/not-found.jpg": "/search-books/static/media/not-found.82952555d8ac87220e58.jpg",
+    "index.html": "/search-books/index.html",
+    "main.d98162bc.css.map": "/search-books/static/css/main.d98162bc.css.map",
+    "main.4db1780d.js.map": "/search-books/static/js/main.4db1780d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d98162bc.css",
+    "static/js/main.4db1780d.js"
+  ]
+}
