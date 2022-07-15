@@ -20,4 +20,4 @@
 ### Documentation:
 https://developers.google.com/books/docs/v1/using 
 
-![bottom img](src/assets/header-image.png)
+![bottom img](src/assets/images/header-image.png)

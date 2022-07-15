@@ -1,13 +1,13 @@
 import { FC } from "react";
-import BookItem from "./BookItem";
+import BookItem from "../components/BookItem";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import books from "../store/books";
-import { IBookItem } from "../store/types";
-import Button from "./UI/Button";
-import Preloader from "./UI/Preloader";
+import { IBookItem } from "../models/models";
+import Button from "../components/UI/Button";
+import Preloader from "../components/UI/Preloader";
 
-const BookList: FC = () => {
+const BookListPage: FC = () => {
   const navigate = useNavigate();
   const {
     totalBooksCount,
@@ -22,6 +22,10 @@ const BookList: FC = () => {
     books.loadMoreBooks();
   };
 
+  const redirectToBookInfo = (id: string) => {
+    navigate(`about/${id}`);
+  };
+
   return (
     <div className="flex flex-col items-center p-5">
       {isLoading && <Preloader />}
@@ -34,7 +38,7 @@ const BookList: FC = () => {
         {bookList.map((bookItem: IBookItem, index: number) => (
           <BookItem
             bookItem={bookItem}
-            redirectHandler={navigate}
+            redirectHandler={redirectToBookInfo}
             key={index}
           />
         ))}
@@ -57,4 +61,4 @@ const BookList: FC = () => {
   );
 };
 
-export default observer(BookList);
+export default observer(BookListPage);

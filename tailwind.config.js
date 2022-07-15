@@ -19,8 +19,8 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        "header-image": "url('assets/header-image.png')",
-        "search-icon": "url('assets/search-icon.png')",
+        "header-image": "url('assets/images/header-image.png')",
+        "search-icon": "url('assets/images/search-icon.png')",
       },
     },
   },

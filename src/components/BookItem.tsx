@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { IBookItem } from "../store/types";
-import not_found_image from "../assets/not-found.jpg";
+import { IBookItem } from "../models/models";
+import not_found_image from "../assets/images/not-found.jpg";
 
 interface BookItemProps {
   bookItem: IBookItem;
@@ -32,7 +32,7 @@ const BookItem: FC<BookItemProps> = ({ bookItem, redirectHandler }) => {
         <div className="text-black-500/50 text-sm underline">
           {volumeInfo.categories && volumeInfo.categories[0]}
         </div>
-        <div className="font-bold">{volumeInfo.title}</div>
+        <div className="font-bold">{volumeInfo?.title}</div>
         <div className="text-sm text-black-500/50">{volumeInfo?.authors}</div>
       </div>
     </div>

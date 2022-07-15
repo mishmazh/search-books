@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import books from "../store/books";
 import { observer } from "mobx-react-lite";
-import not_found_image from "../assets/not-found.jpg";
-import Button from "./UI/Button";
-import Preloader from "./UI/Preloader";
+import not_found_image from "../assets/images/not-found.jpg";
+import Button from "../components/UI/Button";
+import Preloader from "../components/UI/Preloader";
 
-const BookInfo = () => {
+const BookInfoPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -62,4 +62,4 @@ const BookInfo = () => {
   );
 };
 
-export default observer(BookInfo);
+export default observer(BookInfoPage);

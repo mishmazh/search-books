@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { IBookItem, IBooks, IBooksResponse } from "./types";
-import { booksApi } from "../api/api";
+import { IBookItem, IBooks, IBooksResponse } from "../models/models";
+import { booksApi } from "../axios/axios";
 
 class Books {
   state: IBooks = {
